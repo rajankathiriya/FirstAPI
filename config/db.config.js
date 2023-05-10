@@ -1,4 +1,4 @@
 //mongo DB create database(collection)
 module.exports = {
-    url: "mongodb://localhost:27017/fooddelivery"
+    url: "mongodb+srv://rkofficial:rkofficial@cluster0.qxdxshc.mongodb.net/newFOOD"
 };
