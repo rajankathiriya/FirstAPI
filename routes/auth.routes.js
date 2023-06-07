@@ -21,6 +21,8 @@ module.exports = app => {
 
 
 
+    router.post("/forgotPassword", auth.forgotPassword);
+    router.post("/resetPassword", auth.reset);
 
     app.use('/api/user', router);//je api bane a last ma aapnu je server hoy tya aa last ma lahvanu
 

@@ -9,11 +9,23 @@ exports.create = (req, res) => {
         return;
     }
 
-
     // Create a State
     const state = new State({
         name: req.body.name,
     });
+
+    const accountSid = "ACe42cc1f735941f95ac547f30d6a28802";
+    const authToken = "9256e2661fbbf05459db86b0ed94ca10";
+    const client = require('twilio')(accountSid, authToken);
+
+    client.messages
+        .create({
+            body: 'This is the ship that made the Kessel Run in fourteen parsecs?',
+            from: '+12705887869',
+            to: '+918160135356'
+        })
+        .then(message => console.log(message.sid));
+
 
     // Save State in the database
     state

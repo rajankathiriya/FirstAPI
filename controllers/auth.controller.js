@@ -192,6 +192,63 @@ exports.signupWithTransaction = async (req, res) => {
     }
 };
 
+// =========================Forgot Password==========================
+exports.forgotPassword = async (req, res) => {
+
+    let emailId = req.body.email;
+
+    var nodemailer = require('nodemailer');
+
+    let rad = Math.floor(Math.random(0, 1) * 1000);
+
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'rkofficial2512@gmail.com',
+            pass: 'dvzdgifqvbrrgrzy'
+        }
+    });
+
+    User.find({ email: emailId })
+        .then(data => {
+
+            res.send(data[0]["_id"]);
+
+            var mailOptions = {
+                from: 'rkofficial2512@gmail.com',
+                to: req.body.email,
+                subject: 'Sending Email using Node.js',
+                text: `<a href="http://192.168.1.28:3000/resetpass/${data[0]._id}">ResetPassword</a>`
+            };
+
+            transporter.sendMail(mailOptions, function (error, info) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Email sent: ' + info.response);
+                }
+            });
+        })
+
+
+
+}
+
+// =========================Reset Password==========================
+
+exports.reset = async (req, res) => {
+
+    let password = bcrypt.hashSync(req.body.password, 8);
+    let email = req.body.email;
+
+    User.findOneAndUpdate({ email: email, password: password }).then(y => {
+
+        res.send("password changed sucessfully.");
+
+    })
+
+
+}
 
 
 
